@@ -6,6 +6,14 @@ const mongoose =require('mongoose')
 
 app.use(express.json())
 
+const login  = require('./routes/AuthRoute')
+const register=  require('./routes/AuthRoute')
+app.use('/api' , register)
+app.use('/api' , login)
+
+
+
+app.use(express.json())
 
 async function main() {
     try{
@@ -17,8 +25,6 @@ async function main() {
     }
 }
 main()
-
-
 
 app.listen(port,()=>{
     console.log(`connected with${port}`)
