@@ -3,7 +3,8 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const { regesterSchema, LoginSchema } =require('../controller/validations/AuthValidation')
+const { regesterSchema, LoginSchema } =require('../controller/validations/AuthValidation');
+const { cache } = require("react");
 
 const register = async (req, res) => {
   try {
@@ -89,8 +90,17 @@ res.status(200).json({msg:"log in success", token})
     console.log(error);
   }
 };
-
+const logout = async (req , res)=>{
+  try{
+    res.status(200).josn({msg:"logged out"})
+  }
+  catch(error){
+    res.status(500).json({msg:"server error"})
+  }
+  
+}
 module.exports = {
   register,
   login,
+  logout
 };
