@@ -9,6 +9,7 @@ if(!authheader) return res.status(401).json({msg:"token is not found"})
 const token = authheader.split(" ")[1]
 // console.log(token);
 const payload = jwt.verify(token , process.env.JWT_SECRET)
+
 // console.log(payload);
 // {
 //   id: '69b5b74acf52f59fddeeeeff',

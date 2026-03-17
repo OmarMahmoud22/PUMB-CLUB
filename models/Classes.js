@@ -8,20 +8,21 @@ const ClassesSchema = mongoose.Schema({
         required:true
     },
     name:{
-        required:true,
+        type:String,
         enum:['Fitness','Boxing','Calistinics','Yoga','Zompa','Body Shape'],
+        required:true,
     },
     price:{
-        required:true,
         type:Number,    
+        required:true,
     },
     start_in:{
+        type:String,
         required:true,
-        type:Date
     },
     end_in:{
+        type:String,
         required:true,
-        type:Date
     }
 
 

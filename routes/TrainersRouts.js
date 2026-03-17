@@ -2,9 +2,13 @@ const express = require("express");
 
 const routes = express.Router();
 
-const Trainers = require("../controller/TrainerController");
-const TranersG = require("../controller/TrainerController");
+const {Trainers,TranersG,TranersU,TrainderD} = require("../controller/TrainerController");
 const AdminMiddelware = require("../Midldleware/AdminMiddelware");
 routes.post("/Traners", AdminMiddelware, Trainers);
-routes.get("/Traners", AdminMiddelware, TranersG);
+routes.get("/Traners/:id",AdminMiddelware, TranersG);
+routes.put('/Traners/:id',AdminMiddelware,TranersU)
+routes.delete('/Traners/:id',TrainderD)
 module.exports = routes;
+
+
+

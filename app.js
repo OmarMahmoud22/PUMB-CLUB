@@ -6,17 +6,14 @@ const port = process.env.PORT || 3000
 const mongoose =require('mongoose')
 app.use(express.json())
 //------------------------AUTH_ROUTE-----------------------
-const login  = require('./routes/AuthRoute')
-const register=  require('./routes/AuthRoute')
-const logout =  require('./routes/AuthRoute')
-app.use('/api' , register)
-app.use('/api' , login)
-app.use('/api' , logout)
+const authRoutes = require('./routes/AuthRoute');
+app.use('/api', authRoutes); 
 //-------------------------TRANERS_ROUTE--------------------------
-const Traners = require('./routes/TrainersRouts')
-const TranersG = require('./routes/TrainersRouts')
-app.use('/api',Traners)
-app.use('/api',TranersG)
+const trainersRoutes = require('./routes/TrainersRouts');
+app.use('/api', trainersRoutes);
+//--------------------------CLASSES_ROUTER----------------------------------------
+const classesRoutes = require('./routes/ClassesRoutes');
+app.use('/api', classesRoutes);
 
 //--------------------------CONNECTION_DB----------------------------------
 async function main() {
@@ -33,3 +30,5 @@ main()
 app.listen(port,()=>{
     console.log(`connected with${port}`)
 })
+
+

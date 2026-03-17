@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const { regesterSchema, LoginSchema } =require('../controller/validations/AuthValidation');
-const { cache } = require("react");
+
 
 const register = async (req, res) => {
   try {
