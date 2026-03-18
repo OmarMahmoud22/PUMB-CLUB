@@ -88,4 +88,5 @@ const TrainderD = async (req, res) => {
 }
 
 
+
 module.exports = { Trainers, TranersG, TranersU ,TrainderD};

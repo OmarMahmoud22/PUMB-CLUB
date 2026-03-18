@@ -14,11 +14,10 @@ app.use('/api', trainersRoutes);
 //--------------------------CLASSES_ROUTER----------------------------------------
 const classesRoutes = require('./routes/ClassesRoutes');
 app.use('/api', classesRoutes);
-
 //--------------------------CONNECTION_DB----------------------------------
 async function main() {
     try{
-        await mongoose.connect(process.env.MONGO_URL)
+        await mongoose.connect(process.env.MONGODB_URL)
         console.log("connected")
     }
     catch(error){

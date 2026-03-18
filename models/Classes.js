@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 const ClassesSchema = mongoose.Schema({
     trainerId:{
-        type:mongoose.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'Trainer',
         required:true
     },
