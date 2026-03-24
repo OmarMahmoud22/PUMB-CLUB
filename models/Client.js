@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const ClientSchema = mongoose.Schema({
 
     userId:{
-        type:mongoose.Types.ObjectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:'User',
         required:true
     },
@@ -22,8 +22,8 @@ const ClientSchema = mongoose.Schema({
       type:Number
     } ,
     height: {
-        required:true,
-      type:Number
+        type:Number,
+        required:true
     },
 
 },{ timestamps:true });

@@ -19,6 +19,7 @@ const payload = jwt.verify(token , process.env.JWT_SECRET)
 // }
 
 if(payload.role !== "admin") return res.status(403).json({msg:"only admin can do this"})
+    req.user = payload;
 next()
     }
     catch(error){

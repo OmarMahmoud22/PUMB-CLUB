@@ -14,7 +14,14 @@ app.use('/api', trainersRoutes);
 //--------------------------CLASSES_ROUTER----------------------------------------
 const classesRoutes = require('./routes/ClassesRoutes');
 app.use('/api', classesRoutes);
+//--------------------------Client_ROUTER----------------------------
+const ClientRouter = require('./routes/ClientRoute')
+app.use('/api' , ClientRouter)
+//--------------------------Enrollment_ROTER-----------------------------
+const EnrollmentRouters = require('./routes/EnrollmentRouter')
+app.use('/api' , EnrollmentRouters)
 //--------------------------CONNECTION_DB----------------------------------
+
 async function main() {
     try{
         await mongoose.connect(process.env.MONGODB_URL)

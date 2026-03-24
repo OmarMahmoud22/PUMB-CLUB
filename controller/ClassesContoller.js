@@ -1,5 +1,5 @@
 const Classes = require('../models/Classes')
-const {ClassesSchema} = require('../controller/validations/ClassesValidation')
+const {ClassesSchema , ClassesSchemaU} = require('../controller/validations/ClassesValidation')
 
 const ClassesP = async (req , res) =>{
     try{
@@ -7,6 +7,7 @@ const ClassesP = async (req , res) =>{
         abortEarly:false,
         stripUnknown:true
     })
+    
   if (error) {
       return res.status(400).json({
         msg: error.details.map((err) => err.message),
@@ -45,14 +46,53 @@ const leadth_classes = async (req, res) => {
     try{
   //get id from front end
   const {id} = req.params
-  //find by id 
-  const classess = await Classes.find({trainerId:id})
+  //find by id and mack sure the id of trainer  = id sent it
+  const classess = await Classes.find({trainerId:id}).populate({
+        path: "trainerId",
+        select: "name rating experience_years"});
   //validate if trainer is not defind
-  if (!classess) return res.status(404).json({msg:"this id is not defind"})
-  res.status(201).json({msg:"done get it"
-                        ,total_leangth:classess.length,
-                        classs_name:classess.map(item => item.name)
-})
+  if (classess===0) return res.status(404).json({msg:"this traner has not classes"})
+  res.status(200).json({
+      msg: "done",
+      total_length: classess.length,
+      trainer: classess[0].trainerId, // select id once
+      classes: classess.map(item => ({
+        name: item.name,
+        price: item.price
+      }))
+    });
+                        
+
+
+}
+catch(error){
+    res.status(500).json({msg:"server error"})
+}
+
+}
+const ClassesD = async (req,res)=>{
+try{
+    const {id}= req.params
+    const classs = await Classes.findByIdAndDelete(id)
+    if(!classs) return res.status(404).json({msg:"not found"})
+    res.status(201).json({msg:"done deleted"})
+}
+catch(error){res.status(500).json({msg:"server error"})}
+}
+const ClassesU =async (req,res)=>{
+try{
+    const {error , value} = ClassesSchemaU.validate(req.body,{
+        abortEarly:false,
+        stripUnknown:true
+        
+    })
+    if(error)return res.status(404).json({msg:error.details.map(err => err.message)})
+    const {id} =req.params
+    const clas = await Classes.findByIdAndUpdate(id , value, { new: true });
+    if(!clas) return res.status(404).json({msg:"this id is not defind"})
+    res.status.json({msg:"updated done"})    
+
+
 
 }
 catch(error){
@@ -61,4 +101,4 @@ catch(error){
 }
 
 
-module.exports = {ClassesP , ClassesG,leadth_classes}
+module.exports = {ClassesP , ClassesG,leadth_classes , ClassesD , ClassesU}

@@ -9,4 +9,10 @@ const ClassesSchema = joi.object({
     
 
 })
-module.exports = {ClassesSchema}
+const ClassesSchemaU = joi.object({
+    name: joi.string().valid('Fitness','Boxing','Calistinics','Yoga','Zompa','Body Shape'),
+    price : joi.number(),
+    start_in:joi.string().pattern(/^([01]\d|2[0-3]):([0-5]\d)$/),
+    end_in:joi.string().pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+})
+module.exports = {ClassesSchema , ClassesSchemaU}
