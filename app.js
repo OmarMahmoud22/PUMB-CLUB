@@ -20,6 +20,9 @@ app.use('/api' , ClientRouter)
 //--------------------------Enrollment_ROTER-----------------------------
 const EnrollmentRouters = require('./routes/EnrollmentRouter')
 app.use('/api' , EnrollmentRouters)
+//--------------------------ATTENDANCE_ROUTER--------------------
+const AttenaceRouter = require('./routes/AttendanceRoute')
+app.use('/api' , AttenaceRouter)
 //--------------------------CONNECTION_DB----------------------------------
 
 async function main() {
