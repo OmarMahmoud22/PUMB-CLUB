@@ -3,7 +3,8 @@ const express = require('express')
 const router = express.Router()
 
 const {AttenancP,AttendancG} = require('../controller/AttendanceController')
-router.post('/attendace' , AttenancP)
-router.get('/attendace/:id' ,AttendancG )
+const AdminMiddelware = require('../Midldleware/AdminMiddelware')
+router.post('/attendace' , AdminMiddelware,AttenancP)
+router.get('/attendace/:id' ,AdminMiddelware,AttendancG )
 
 module.exports = router
