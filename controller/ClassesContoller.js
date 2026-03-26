@@ -99,6 +99,13 @@ catch(error){
     res.status(500).json({msg:"server error"})
 }
 }
+const AllClasses = async(req,res)=>{
+    try {
+        const data = await Classes.find()
+        res.status(200).json({msg:"done" , data})
+    } catch (error) {
+        res.status(500).json({msg:"server error"})
+    }
+}
 
-
-module.exports = {ClassesP , ClassesG,leadth_classes , ClassesD , ClassesU}
+module.exports = {ClassesP , ClassesG,leadth_classes , ClassesD , ClassesU , AllClasses}

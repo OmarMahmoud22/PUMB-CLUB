@@ -71,6 +71,7 @@ const login = async (req, res) => {
     const user = await User.findOne({email})
     if(!user) return res.status(400).json({msg:"this email is not found"})
     const mathchpassword = await bcrypt.compare(password , user.password)
+  console.log(await bcrypt.compare(password, user.password));
   if(!mathchpassword) return res.status(400).json({msg:"invalid bassword"})
     
     const token = jwt.sign(
@@ -93,12 +94,17 @@ const logout = async (req , res)=>{
     res.status(200).josn({msg:"logged out"})
   }
   catch(error){
-    res.status(500).json({msg:"server error"})
+    res.status(500).json({msg:"server error",error: error.message})
   }
   
 }
+
 module.exports = {
   register,
   login,
   logout
 };
+
+
+
+

@@ -5,6 +5,8 @@ const app = express()
 const port = process.env.PORT || 3000
 const mongoose =require('mongoose')
 app.use(express.json())
+const cors = require('cors')
+app.use(cors());
 //------------------------AUTH_ROUTE-----------------------
 const authRoutes = require('./routes/AuthRoute');
 app.use('/api', authRoutes); 
@@ -24,7 +26,7 @@ app.use('/api' , EnrollmentRouters)
 const AttenaceRouter = require('./routes/AttendanceRoute')
 app.use('/api' , AttenaceRouter)
 //--------------------------CONNECTION_DB----------------------------------
-
+//تنظيم البورتات بين react and node
 async function main() {
     try{
         await mongoose.connect(process.env.MONGODB_URL)
