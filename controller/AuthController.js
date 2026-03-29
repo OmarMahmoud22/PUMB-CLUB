@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const { regesterSchema, LoginSchema } =require('../controller/validations/AuthValidation');
+const { status } = require("init");
 
 
 const register = async (req, res) => {
@@ -22,18 +23,20 @@ const register = async (req, res) => {
 
 
     }
-    const {name , email , password , role} = value
+    const {name , email , password , role , status} = value
     const existing = await User.findOne({ email })
  
    if(existing){
    return res.status(400).json({msg:"already exists"})
  }
     const hashPassword = await bcrypt.hash(password, 10);
+    
     const user = await User.create({
       name,
       email,
       password: hashPassword,
-      role
+      role,
+      status
     });
 
     const token = jwt.sign({ id: user._id, role: user.role }
@@ -70,11 +73,12 @@ const login = async (req, res) => {
     const {email , password} = value;
     const user = await User.findOne({email})
     if(!user) return res.status(400).json({msg:"this email is not found"})
-    const mathchpassword = await bcrypt.compare(password , user.password)
-  console.log(await bcrypt.compare(password, user.password));
+
+  const mathchpassword = await bcrypt.compare(password , user.password)
+
   if(!mathchpassword) return res.status(400).json({msg:"invalid bassword"})
-    
     const token = jwt.sign(
+      //  if(user.stauts == 'pending')return res.stauts(401).json({msg:"you cant login after admin approved your email"})
 
       {id: user._id,role:user.role},
       process.env.JWT_SECRET,
@@ -86,7 +90,7 @@ const login = async (req, res) => {
 res.status(200).json({msg:"log in success", token})
      
   } catch (error) {
-    console.log(error);
+   res.status(500).json({msg:"server error"})
   }
 };
 const logout = async (req , res)=>{
@@ -98,11 +102,23 @@ const logout = async (req , res)=>{
   }
   
 }
+const changeRole = async (req,res)=>{
+  try{
+    const {id} = req.params
+    const user = await User.findByIdAndUpdate(id ,{stauts:'approved'},{ new:true})
+    if(!user) return res.status(404).json({msg:"not fonud"})
+    res.status(201).json({msg:"updated" , user})
+
+  }catch(error){
+    res.status.josn({msg:"server error"})
+  }
+}
 
 module.exports = {
   register,
   login,
-  logout
+  logout,
+  changeRole
 };
 
 

@@ -18,6 +18,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enum: ['admin', 'client' ,'trainer'],
         default: 'client'
+    },
+    stauts:{
+        type:String,
+        enum:['pending' , 'approved'],
+        default:'pending',
+        require:true
     }
 
     

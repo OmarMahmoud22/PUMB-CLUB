@@ -26,10 +26,10 @@ app.use('/api' , EnrollmentRouters)
 const AttenaceRouter = require('./routes/AttendanceRoute')
 app.use('/api' , AttenaceRouter)
 //--------------------------CONNECTION_DB----------------------------------
-//تنظيم البورتات بين react and node
+
 async function main() {
     try{
-        await mongoose.connect(process.env.MONGODB_URL)
+        await mongoose.connect(process.env.MONGO_DB)
         console.log("connected")
     }
     catch(error){
