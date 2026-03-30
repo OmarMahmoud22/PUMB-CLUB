@@ -28,4 +28,13 @@ catch(error){
     res.status(500).json({msg:"server error"})
 }
 }
-module.exports = {ClientP, ClientG}
+const AllClient = async(req,res)=>{
+    try {
+        const data = await Client.find()
+        if(!data) return res.status(404).json({msg:"not found"})
+         res.status(200).json({msg:"done",all_client:data})
+    } catch (error) {
+        res.status(500).json({msg:"server error"})
+    }
+}
+module.exports = {ClientP, ClientG , AllClient}

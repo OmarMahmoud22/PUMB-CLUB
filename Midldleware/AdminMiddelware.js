@@ -19,7 +19,7 @@ const payload = jwt.verify(token , process.env.JWT_SECRET)
 // }
 
 if(payload.role !== "admin") return res.status(403).json({msg:"only admin can do this"})
-    
+    req.user = payload;
 next()
     }
     catch(error){
@@ -50,7 +50,7 @@ const checkStatus = async (req, res, next) => {
             return res.status(403).json({ msg: "wait for admin approval" });
         }
         
-
+req.user = payload;
         next();
     } catch (error) {
         console.log(error);
@@ -58,6 +58,25 @@ const checkStatus = async (req, res, next) => {
     }
 };
 
+const AdminAndTrainer = (...roles) => {
+    return (req, res, next) => {
+        try {
+            const authheader = req.headers.authorization;
+            if (!authheader) return res.status(404).json({ msg: "where your token" });
 
-// }
-module.exports = {AdminMiddelware , checkStatus}
+            const token = authheader.split(" ")[1];
+            const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+            if (!roles.includes(payload.role)) {
+                return res.status(403).json({ msg: "not allowed" });
+            }
+
+            req.user = payload;
+            next();
+        } catch (error) {
+            res.status(500).json({ msg: "server error" });
+        }
+    };
+};
+
+module.exports = {AdminMiddelware , checkStatus ,AdminAndTrainer}

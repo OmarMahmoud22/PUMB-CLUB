@@ -7,6 +7,7 @@ const { regesterSchema, LoginSchema } =require('../controller/validations/AuthVa
 const { status } = require("init");
 
 
+
 const register = async (req, res) => {
   try {
     const {error , value} = regesterSchema.validate(req.body,{
@@ -113,12 +114,23 @@ const changeRole = async (req,res)=>{
     res.status.josn({msg:"server error"})
   }
 }
+const GetAllUsers = async (req,res) => {
+  try{
+    const data = await User.find()
+    if(data.length === 0) return res.status(404).json({msg:"not found"})
+      res.status(200).json({msg:"done" , users:data})
+  }
+  catch(error){
+    res.status(500).json({msg:"sssssssssssssssserver error"})
+  }
+}
 
 module.exports = {
   register,
   login,
   logout,
-  changeRole
+  changeRole,
+  GetAllUsers
 };
 
 

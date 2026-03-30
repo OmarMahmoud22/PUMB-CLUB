@@ -38,4 +38,21 @@ const ClientMiddlewareG = async (req, res, next) => {
     res.status(500).json({ msg: "server error" });
   }
 };
-module.exports = {ClientMiddelware,ClientMiddlewareG}
+
+const ClientAndAdmin = (...roles) => async (req,res,next)=>{
+  try {
+    const authherder = req.headers.authorization
+    if(!authorization) return res.status(404).json({msg:"not found you token"})
+      const token = authherder.split(" ")[1]
+    const payload = jwt.verify(token , process.env.JWT_SECRET)
+     if (!roles.includes(payload.role)) {
+                return res.status(403).json({ msg: "not allowed" });
+            }
+
+            req.user = payload;
+            next();
+  } catch (error) {
+    res.status(500).json({msg:"server error"})
+  }
+}
+module.exports = {ClientMiddelware,ClientMiddlewareG , ClientAndAdmin}

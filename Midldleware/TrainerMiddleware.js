@@ -14,4 +14,5 @@ const TrainerMiddleware = async (req ,res ,next)=>{
         res.status(500).json({msg:"server error"})
     }
 }
+
 module.exports = {TrainerMiddleware}
